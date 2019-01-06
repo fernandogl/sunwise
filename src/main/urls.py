@@ -7,5 +7,7 @@ router = DefaultRouter()
 router.register(r'urls', views.UrlViewSet)
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('api/', include(router.urls)),
+    path('urls/', views.UrlListView.as_view()),
+    path('<slug:codigo>/', views.redirige, name='redirige' ),
 ]
