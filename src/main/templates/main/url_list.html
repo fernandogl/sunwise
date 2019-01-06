@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>SunWise | Acorta URLs</title>
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+	<style>
+		table {
+			font-size: .8em;
+		}
+		form {
+			padding: 1em;
+			/*background-color: #ddd;*/
+			border: 1px solid #ddd;
+			height: 10em;
+		}
+	</style>
+
+</head>
+<body>
+	
+
+
+
+<div class="container-fluid ">
+
+	<h1>SunWise - Acorta URLs</h1>
+	<hr>
+
+	  <div class="row">
+	    <div class="col-md-7">
+
+			<form action="" id="form_url">
+				{% csrf_token %}
+				<div class="form-group">
+					<label for="url">URL:</label>
+					<input type="text" class="form-control" id='url' placeholder="Escriba una URL que desee acortar" name="original" required>
+				</div>
+				<button id="agrega_url" class="btn btn-primary btn-sm">Agregar URL</button>
+			</form>
+			<br>
+
+
+
+			<!-- Tabla izquierda -->
+			<div class="table-responsive">
+				<table class='table table-sm'>
+					<thead class="thead-light">
+						<tr>
+							<th scope='col'>ID</th>
+							<th scope='col'>URL</th>
+							<th scope='col'>Codigo</th>
+							<th scope='col'>Creado</th>
+							<th scope='col'>Accion</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						{% for obj in object_list %}
+							<tr>
+								<td scope='row'>{{ obj.id }}</td>
+								<td scope='row'>{{ obj.original }}</td>
+								<td scope='row'>{{ obj.codigo }}</td>
+								<td scope='row'>{{ obj.creado }}</td>
+								<td scope='row'>
+									<button class="btn_borra_url" data-id="{{ obj.id }}">Borrar</button>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+
+		</div>
+
+
+	    <div class="col-md-5">
+
+
+			<form id="form_archivo_url">
+				{% csrf_token %}
+			  	<div class="form-group">
+			    	<label for="archivo_url">Seleccione el archivo con multiples URLs para importar</label>
+			    	<input type="file" class="form-control-file" id="archivo_url">
+			  	</div>
+			  	<button id="agrega_archivo_url" class="btn btn-primary btn-sm">Agregar archivo con URLs</button>
+			</form>
+			<br>
+
+
+
+			<!-- Tabla derecha -->
+			<div class="table-responsive">
+				<table class='table table-sm'>
+					<thead class="thead-light">
+						<tr>
+							<th scope='col'>ID</th>
+							<th scope='col'>Archivo</th>
+							<th scope='col'>Urls</th>
+							<th scope='col'>Creado</th>
+							<th scope='col'>Accion</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr>
+							<td scope='row'>1</td>
+							<td scope='row'>archivo1.json</td>
+							<td scope='row'>25</td>
+							<td scope='row'>5/Enero/2019 10:20am</td>
+							<td scope='row'>
+								<button>Borrar</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+		</div>
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+<!-- Librerias para bootstrap -->
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script> -->
+
+
+<script>
+
+
+    $(document).on("click", "#agrega_url", function(e) {
+        e.preventDefault();
+        // alert("Hola");
+
+        var data = $('#form_url').serialize();
+        console.log( data );
+
+
+        $.ajax({        
+            url:        '/api/urls/',
+            type:       'POST',     
+            data:        data,
+            dataType:   'JSON',      
+            error:  function( jqXHR, textStatus, errorThrown ) {
+                if ( textStatus != 'abort') {
+                    alert( textStatus );
+                    alert( errorThrown );  
+                    // bootbox.alert("There is an error, please provide all the information required in this form!");                                          
+                }
+            },                      
+            success:  function( resp ) {
+                console.log('Success');
+                // alert("Success");
+                location.href='/urls/';
+            }
+        }); 
+
+    });  	
+
+
+    $(document).on("click", "#agrega_archivo_url", function(e) {
+        e.preventDefault();
+        // alert("Hola Archivo");
+
+        // var data = $('#form_archivo_url').serialize();
+        // console.log( data );
+
+		var data = new FormData();
+        var files = $("#archivo_url").get(0).files;
+        console.log( files );
+        console.log( files[0] );
+        console.log( files.length );
+
+        if (files.length > 0) {
+            data.append("upload", files[0]);
+        }
+
+
+
+        var ajaxRequest = $.ajax({
+            type: "POST",
+            url: "/api/urls/",
+            contentType: false,
+            processData: false,
+            data: data,
+
+            error: function (xhr, status, error) {
+                console.log(xhr);
+                console.log(status);
+                console.log(error);
+                console.log(data);
+            }
+        });
+
+        ajaxRequest.done(function (xhr, textStatus) {
+        	console.log('Success');
+            // $("#response").attr('class', "alert alert-success");
+            // $("#response").html("File uploaded successfully");
+        });
+
+
+
+        // $.ajax({        
+        //     url:        '/api/urls/',
+        //     type:       'POST',     
+        //     data:        data,
+        //     dataType:   'JSON',      
+        //     error:  function( jqXHR, textStatus, errorThrown ) {
+        //         if ( textStatus != 'abort') {
+        //             alert( textStatus );
+        //             alert( errorThrown );  
+        //             // bootbox.alert("There is an error, please provide all the information required in this form!");                                          
+        //         }
+        //     },                      
+        //     success:  function( resp ) {
+        //         console.log('Success');
+        //         // alert("Success");
+        //         location.href='/urls/';
+        //     }
+        // }); 
+
+    });  	
+
+
+
+    $(document).on("click", ".btn_borra_url", function(e) {
+        e.preventDefault();
+        var pk = $(this).attr('data-id');
+        console.log( pk );
+        $.ajax({        
+            url:        '/api/urls/' + pk + '/',
+            type:       'DELETE',     
+            dataType:   'JSON',      
+            error:  function( jqXHR, textStatus, errorThrown ) {
+                if ( textStatus != 'abort') {
+                    alert( textStatus );
+                    alert( errorThrown );                                           
+                }
+            },                      
+            success:  function( resp ) {
+                console.log('Success');
+                location.href='/urls/';
+            }
+        }); 
+    });    
+
+
+
+</script>
+
+
+
+
+</body>
+</html>
