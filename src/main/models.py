@@ -5,6 +5,16 @@ import random
 # Create your models here.
 
 
+class ArchivoUrl(models.Model):
+    """
+    Guarda un registro por cada archivo con url's que se envia al servicio web.
+    Agrupa las url's del archivo para poder descargar la version corta
+    """
+
+    nombre = models.CharField(max_length=250, unique=True)
+    creado = models.DateTimeField(auto_now_add=True)
+
+
 class Url(models.Model):
     """
     Guarda URLs completas u originales y genera un codigo para cada nueva URL 
@@ -14,6 +24,7 @@ class Url(models.Model):
     """
     original = models.URLField(max_length=2000, unique=True)
     codigo = models.CharField(max_length=6, unique=True)
+    archivo = models.ForeignKey(ArchivoUrl, null=True, on_delete=models.CASCADE)
     creado = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -32,13 +43,4 @@ class Url(models.Model):
             self.codigo = ''.join(random.choices(opciones, k=6))
         super().save(*args, **kwargs)
 
-
-class ArchivoUrl(models.Model):
-    """
-    Guarda un registro por cada archivo con url's que se envia al servicio web.
-    Agrupa las url's del archivo para poder descargar la version corta
-    """
-
-    nombre = models.CharField(max_length=250, unique=True)
-    creado = models.DateTimeField(auto_now_add=True)
 
