@@ -59,7 +59,17 @@ En la ultima columna de cada listado, se cuenta con el botón “Borrar” que e
 Adicionalmente el listado de archivos permite también descargar en archivo JSON todas las URL’s con su correspondiente versión acortada de las rutas correspondientes a un archivos importado con anterioridad.
 
 # Archivos JSON para pruebas
-Dentro de la carpeta **json** se encuentran 2 archivos JSON que pueden ser utilizados para realizar pruebas de importar URL’s mediante la interfaz web y sirven de referencia si se quiere crear mas archivos de este tipo.
+Dentro de la carpeta **src/json** se encuentran 2 archivos JSON que pueden ser utilizados para realizar pruebas de importar URL’s mediante la interfaz web y sirven de referencia si se quiere crear mas archivos de este tipo.
+
+Dentro del archivo JSON se define una lista de objetos, utilizando el nombre **original** y la ruta completa como el valor en cadena de texto.
+```
+[
+	{ "original": "http://aa.com"},
+	{ "original": "http://bb.com"},
+	{ "original": "http://cc.com"}
+]
+```
+
 
 # Endpoints
 
