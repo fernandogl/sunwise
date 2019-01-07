@@ -9,6 +9,8 @@ Cuenta adicionalmente con una interfaz web para permitir la introducción median
 Este proyecto se realizó empleando Python 3.7, Django 2.1, DjangoRestFramework 3.9 y SQLite como base de datos.
 
 
+![Alt text](src/img/sunwise.png?raw=true "SunWise")
+
 # Procedimiento de instalación
 Instalar [Python 3](https://www.python.org/downloads/)
 
