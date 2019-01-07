@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import Url, ArchivoUrl
-from .serializers import UrlSerializer
+from .serializers import UrlSerializer, ArchivoUrlSerializer
 
 
 
@@ -40,6 +40,11 @@ class UrlListView(ListView):
         return context
 
 
+class ArchivoUrlViewSet(viewsets.ModelViewSet):
+    queryset = ArchivoUrl.objects.all()
+    serializer_class = ArchivoUrlSerializer
+
+
 class ArchivoUrlView(APIView):
 
     def post(self, request):
@@ -49,9 +54,6 @@ class ArchivoUrlView(APIView):
         archivo = ArchivoUrl.objects.create( nombre=file.name )
         for obj in data:
             obj['archivo'] = archivo.id
-
-        # print( "NAME:", file.name )
-        # print( "SIZE:", file.size )
 
         url_serializer = UrlSerializer( data=data, many=True )
 

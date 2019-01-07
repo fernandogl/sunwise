@@ -14,6 +14,12 @@ class ArchivoUrl(models.Model):
     nombre = models.CharField(max_length=250, unique=True)
     creado = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ['-id']
+
+    def __str__(self):
+        return self.nombre
+
 
 class Url(models.Model):
     """

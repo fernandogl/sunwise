@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from main.models import Url
+from main.models import Url, ArchivoUrl
 
 
 class UrlSerializer(serializers.ModelSerializer):
@@ -9,5 +9,13 @@ class UrlSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Url
-        fields = ('id', 'original', 'codigo', 'creado')
-        # fields = "__all__"
+        # fields = ('id', 'original', 'codigo', 'creado')
+        fields = "__all__"
+
+
+class ArchivoUrlSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ArchivoUrl
+        fields = "__all__"
+        # fields = ('id', 'original', 'codigo', 'creado')

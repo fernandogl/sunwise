@@ -5,6 +5,7 @@ from main import views
 
 router = DefaultRouter()
 router.register(r'urls', views.UrlViewSet)
+router.register(r'archivos', views.ArchivoUrlViewSet)
 
 urlpatterns = [
     path('archivo_url/', views.ArchivoUrlView.as_view(), name='archivo_url' ),

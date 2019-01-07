@@ -51,6 +51,7 @@
 							<th scope='col'>ID</th>
 							<th scope='col'>URL</th>
 							<th scope='col'>Codigo</th>
+							<th scope='col'>Archivo</th>
 							<th scope='col'>Creado</th>
 							<th scope='col'>Accion</th>
 						</tr>
@@ -62,6 +63,7 @@
 								<td scope='row'>{{ obj.id }}</td>
 								<td scope='row'>{{ obj.original }}</td>
 								<td scope='row'>{{ obj.codigo }}</td>
+								<td scope='row'>{{ obj.archivo }}</td>
 								<td scope='row'>{{ obj.creado }}</td>
 								<td scope='row'>
 									<button class="btn_borra_url" data-id="{{ obj.id }}">Borrar</button>
@@ -102,17 +104,18 @@
 					</thead>
 
 					<tbody>
-						<tr>
-							{% for obj in archivos %}
+						{% for obj in archivos %}
+							<tr>
 								<td scope='row'>{{ obj.id }}</td>
 								<td scope='row'>{{ obj.nombre }}</td>
-								<td scope='row'>25</td>
+								<td scope='row'>{{ obj.url_set.all.count }}</td>
 								<td scope='row'>{{ obj.creado }}</td>
 								<td scope='row'>
-									<button>Borrar</button>
+									<!-- <button>Borrar</button> -->
+									<button class="btn_borra_archivo_url" data-id="{{ obj.id }}">Borrar</button>
 								</td>
-							{% endfor %}
-						</tr>
+							</tr>
+						{% endfor %}
 					</tbody>
 				</table>
 			</div>
@@ -269,6 +272,29 @@
             }
         }); 
     });    
+
+
+    $(document).on("click", ".btn_borra_archivo_url", function(e) {
+        e.preventDefault();
+        var pk = $(this).attr('data-id');
+        console.log( pk );
+        $.ajax({        
+            url:        '/api/archivos/' + pk + '/',
+            type:       'DELETE',     
+            dataType:   'JSON',      
+            error:  function( jqXHR, textStatus, errorThrown ) {
+                if ( textStatus != 'abort') {
+                    alert( textStatus );
+                    alert( errorThrown );                                           
+                }
+            },                      
+            success:  function( resp ) {
+                console.log('Success');
+                location.href='/urls/';
+            }
+        }); 
+    });    
+
 
 
 
