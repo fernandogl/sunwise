@@ -58,7 +58,6 @@ class ArchivoUrlView(APIView):
 
         url_serializer = UrlSerializer( data=data, many=True )
 
-
         if( url_serializer.is_valid() ):
             print("Es valido")
             url_serializer.save()

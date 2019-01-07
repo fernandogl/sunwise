@@ -39,6 +39,10 @@ class Url(models.Model):
     def __str__(self):
         return self.original
 
+    # def obten_url_corta(self, request):
+
+
+
     def save(self, *args, **kwargs):
         # Al crear el registro, se genera un valor aleatorio para el atributo
         # 'codigo'
