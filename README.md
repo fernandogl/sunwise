@@ -10,7 +10,7 @@ Este proyecto se realizó empleando Python 3.7, Django 2.1, DjangoRestFramework 
 
 
 # Procedimiento de instalación
-Instalar Python 3
+Instalar [Python 3](https://www.python.org/downloads/)
 
 Clonar este repositorio 
 ```
