@@ -52,7 +52,7 @@
 							<th scope='col'>URL</th>
 							<th scope='col'>Codigo</th>
 							<th scope='col'>Archivo</th>
-							<th scope='col'>Creado</th>
+							<th scope='col'>Creado"</th>
 							<th scope='col'>Accion</th>
 						</tr>
 					</thead>
@@ -63,8 +63,8 @@
 								<td scope='row'>{{ obj.id }}</td>
 								<td scope='row'>{{ obj.original }}</td>
 								<td scope='row'>{{ obj.codigo }}</td>
-								<td scope='row'>{{ obj.archivo }}</td>
-								<td scope='row'>{{ obj.creado }}</td>
+								<td scope='row'>{{ obj.archivo|default_if_none:"" }}</td>
+								<td scope='row'>{{ obj.creado|date }} {{ obj.creado|date }}</td>
 								<td scope='row'>
 									<button class="btn_borra_url" data-id="{{ obj.id }}">Borrar</button>
 								</td>
@@ -99,7 +99,7 @@
 							<th scope='col'>Archivo</th>
 							<th scope='col'>Urls</th>
 							<th scope='col'>Creado</th>
-							<th scope='col'>Accion</th>
+							<th scope='col'>Acciones</th>
 						</tr>
 					</thead>
 
@@ -113,6 +113,7 @@
 								<td scope='row'>
 									<!-- <button>Borrar</button> -->
 									<button class="btn_borra_archivo_url" data-id="{{ obj.id }}">Borrar</button>
+									<button class="btn_descarga" onclick="location.href='/descarga_archivo_url/{{obj.id}}/'; return false">Descargar</button>
 								</td>
 							</tr>
 						{% endfor %}
@@ -261,10 +262,8 @@
             type:       'DELETE',     
             dataType:   'JSON',      
             error:  function( jqXHR, textStatus, errorThrown ) {
-                if ( textStatus != 'abort') {
-                    alert( textStatus );
-                    alert( errorThrown );                                           
-                }
+                alert( textStatus );
+                alert( errorThrown );                                           
             },                      
             success:  function( resp ) {
                 console.log('Success');
@@ -283,10 +282,8 @@
             type:       'DELETE',     
             dataType:   'JSON',      
             error:  function( jqXHR, textStatus, errorThrown ) {
-                if ( textStatus != 'abort') {
-                    alert( textStatus );
-                    alert( errorThrown );                                           
-                }
+                alert( textStatus );
+                alert( errorThrown );                                           
             },                      
             success:  function( resp ) {
                 console.log('Success');
@@ -294,6 +291,7 @@
             }
         }); 
     });    
+
 
 
 

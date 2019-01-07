@@ -9,7 +9,6 @@ class UrlSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Url
-        # fields = ('id', 'original', 'codigo', 'creado')
         fields = "__all__"
 
 
@@ -18,4 +17,4 @@ class ArchivoUrlSerializer(serializers.ModelSerializer):
     class Meta:
         model = ArchivoUrl
         fields = "__all__"
-        # fields = ('id', 'original', 'codigo', 'creado')
+

@@ -1,5 +1,5 @@
-from django.shortcuts import render, HttpResponse
-from django.http import HttpResponseRedirect
+from django.shortcuts import render, HttpResponse, get_object_or_404
+from django.http import HttpResponseRedirect, JsonResponse
 from django.views.generic import ListView
 from rest_framework import permissions, viewsets
 from rest_framework.parsers import JSONParser, FileUploadParser, MultiPartParser
@@ -9,7 +9,8 @@ from rest_framework.views import APIView
 from .models import Url, ArchivoUrl
 from .serializers import UrlSerializer, ArchivoUrlSerializer
 
-
+import csv
+import json
 
 
 def redirige(request, codigo):
@@ -67,6 +68,27 @@ class ArchivoUrlView(APIView):
             archivo.delete()
 
         return Response({'received data': request.data})
+
+
+def descarga_archivo_url(request, id):
+
+    archivo = get_object_or_404( ArchivoUrl, pk=id)
+    urls = Url.objects.filter( archivo=archivo )
+    serializer = UrlSerializer( urls, many=True )
+
+    data = json.dumps(serializer.data, indent=4)
+
+    if '.' in archivo.nombre:
+        nombre_archivo = archivo.nombre.split('.')[0] + '_corto.json'
+    else:
+        nombre_archivo = archivo.nombre
+
+    response = HttpResponse( data, content_type='text/json')
+    response['Content-Disposition'] = f'attachment; filename="{nombre_archivo}"'
+
+    return response
+
+
 
 
 
