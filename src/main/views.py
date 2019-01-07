@@ -6,7 +6,7 @@ from rest_framework.parsers import JSONParser, FileUploadParser, MultiPartParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .models import Url
+from .models import Url, ArchivoUrl
 from .serializers import UrlSerializer
 
 
@@ -34,6 +34,11 @@ class UrlViewSet(viewsets.ModelViewSet):
 class UrlListView(ListView):
     model = Url
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['archivos'] = ArchivoUrl.objects.all()
+        return context
+
 
 class ArchivoUrlView(APIView):
 
@@ -41,11 +46,15 @@ class ArchivoUrlView(APIView):
         file = request.FILES['upload']
 
         data = JSONParser().parse(file)
+        archivo = ArchivoUrl.objects.create( nombre=file.name )
+        for obj in data:
+            obj['archivo'] = archivo.id
 
         # print( "NAME:", file.name )
         # print( "SIZE:", file.size )
 
         url_serializer = UrlSerializer( data=data, many=True )
+
 
         if( url_serializer.is_valid() ):
             print("Es valido")
@@ -53,6 +62,7 @@ class ArchivoUrlView(APIView):
         else:
             print("No es valido")
             print( url_serializer.errors )
+            archivo.delete()
 
         return Response({'received data': request.data})
 

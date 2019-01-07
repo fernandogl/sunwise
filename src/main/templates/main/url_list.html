@@ -103,13 +103,15 @@
 
 					<tbody>
 						<tr>
-							<td scope='row'>1</td>
-							<td scope='row'>archivo1.json</td>
-							<td scope='row'>25</td>
-							<td scope='row'>5/Enero/2019 10:20am</td>
-							<td scope='row'>
-								<button>Borrar</button>
-							</td>
+							{% for obj in archivos %}
+								<td scope='row'>{{ obj.id }}</td>
+								<td scope='row'>{{ obj.nombre }}</td>
+								<td scope='row'>25</td>
+								<td scope='row'>{{ obj.creado }}</td>
+								<td scope='row'>
+									<button>Borrar</button>
+								</td>
+							{% endfor %}
 						</tr>
 					</tbody>
 				</table>
