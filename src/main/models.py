@@ -5,7 +5,7 @@ import random
 # Create your models here.
 
 
-class Url( models.Model ):
+class Url(models.Model):
     """
     Guarda URLs completas u originales y genera un codigo para cada nueva URL 
     con una longitud maxima de 6 caracteres, comprendiendo de letras 
@@ -31,3 +31,14 @@ class Url( models.Model ):
                         + string.digits )
             self.codigo = ''.join(random.choices(opciones, k=6))
         super().save(*args, **kwargs)
+
+
+class ArchivoUrl(models.Model):
+    """
+    Guarda un registro por cada archivo con url's que se envia al servicio web.
+    Agrupa las url's del archivo para poder descargar la version corta
+    """
+
+    nombre = models.CharField(max_length=250, unique=True)
+    creado = models.DateTimeField(auto_now_add=True)
+
