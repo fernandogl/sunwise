@@ -6,7 +6,7 @@ El objetivo de este proyecto es tomar como entrada una o varias URL’s y genera
 
 Cuenta adicionalmente con una interfaz web para permitir la introducción mediante formularios de una URL o de multiples URL’s alojadas en un archivo JSON.
 
-Este proyecto se realizó empleando Python 3.7, Django 2.1, DjangoRestFramework 3.3.1 y SQLite como base de datos.
+Este proyecto se realizó empleando Python 3.7, Django 2.1, DjangoRestFramework 3.9 y SQLite como base de datos.
 
 
 # Procedimiento de instalación
@@ -17,21 +17,21 @@ Clonar este repositorio
 $ git clone https://github.com/fernandogl/sunwise.git
 ```
 
-Crear y activar un ambiente virtual
+Crear y activar un ambiente virtual para evitar conflictos con librerias globales.
 ```
 $ cd sunwise
 $ python3 -m venv venv
 $ source venv/bin/activate
 ```
 
-Instalar las dependencias de Python
+Instalar las dependencias de Python dentro del ambiente virtual.
 ```
-$ cd src
 $ pip install -r requirements.txt 
 ```
 
 Ejecutar las migraciones de la base de datos
 ```
+$ cd src
 $ python manage.py migrate
 ```
 
@@ -57,7 +57,7 @@ En la ultima columna de cada listado, se cuenta con el botón “Borrar” que e
 Adicionalmente el listado de archivos permite también descargar en archivo JSON todas las URL’s con su correspondiente versión acortada de las rutas correspondientes a un archivos importado con anterioridad.
 
 # Archivos JSON para pruebas
-Dentro de la carpeta “json” se encuentran 2 archivos JSON que pueden ser utilizados para realizar pruebas de importar URL’s mediante la interfaz web y sirven de referencia si se quiere crear mas archivos de este tipo.
+Dentro de la carpeta **json** se encuentran 2 archivos JSON que pueden ser utilizados para realizar pruebas de importar URL’s mediante la interfaz web y sirven de referencia si se quiere crear mas archivos de este tipo.
 
 # Endpoints
 
@@ -78,6 +78,6 @@ Dentro de la carpeta “json” se encuentran 2 archivos JSON que pueden ser uti
 
 **Interfaz Web**
 ```
-  /urls/
-	/<codigo>/
+/urls/
+/<codigo>/
 ```
