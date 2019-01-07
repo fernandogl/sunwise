@@ -71,11 +71,9 @@ class ArchivoUrlView(APIView):
 
 
 def descarga_archivo_url(request, id):
-
     archivo = get_object_or_404( ArchivoUrl, pk=id)
     urls = Url.objects.filter( archivo=archivo )
     serializer = UrlSerializer( urls, many=True )
-
     data = json.dumps(serializer.data, indent=4)
 
     if '.' in archivo.nombre:

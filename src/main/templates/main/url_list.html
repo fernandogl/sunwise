@@ -25,12 +25,12 @@
 
 <div class="container-fluid ">
 
-	<h1>SunWise - Acorta URLs</h1>
+	<h1>SunWise - Acorta URL's</h1>
 	<hr>
 
 	  <div class="row">
-	    <div class="col-md-7">
 
+	    <div class="col-md-7">
 			<form action="" id="form_url">
 				{% csrf_token %}
 				<div class="form-group">
@@ -40,8 +40,6 @@
 				<button id="agrega_url" class="btn btn-primary btn-sm">Agregar URL</button>
 			</form>
 			<br>
-
-
 
 			<!-- Tabla izquierda -->
 			<div class="table-responsive">
@@ -62,9 +60,9 @@
 							<tr>
 								<td scope='row'>{{ obj.id }}</td>
 								<td scope='row'>{{ obj.original }}</td>
-								<td scope='row'>{{ obj.codigo }}</td>
+								<td scope='row'>{{ request.scheme }}://{{ request.META.HTTP_HOST }}/{{ obj.codigo }}</td>
 								<td scope='row'>{{ obj.archivo|default_if_none:"" }}</td>
-								<td scope='row'>{{ obj.creado|date }} {{ obj.creado|date }}</td>
+								<td scope='row'>{{ obj.creado|date }} {{ obj.creado|time }}</td>
 								<td scope='row'>
 									<button class="btn_borra_url" data-id="{{ obj.id }}">Borrar</button>
 								</td>
@@ -73,9 +71,7 @@
 					</tbody>
 				</table>
 			</div>
-
 		</div>
-
 
 
 	    <div class="col-md-5">
@@ -109,7 +105,7 @@
 								<td scope='row'>{{ obj.id }}</td>
 								<td scope='row'>{{ obj.nombre }}</td>
 								<td scope='row'>{{ obj.url_set.all.count }}</td>
-								<td scope='row'>{{ obj.creado }}</td>
+								<td scope='row'>{{ obj.creado|date }} {{ obj.creado|time }}</td>
 								<td scope='row'>
 									<!-- <button>Borrar</button> -->
 									<button class="btn_borra_archivo_url" data-id="{{ obj.id }}">Borrar</button>
@@ -130,18 +126,12 @@
 
 
 
-
-
-
-
 <!-- Librerias para bootstrap -->
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-
-<!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script> -->
 
 
 <script>
@@ -177,9 +167,6 @@
             }
         }
     });
-
-
-
 
 
     $(document).on("click", "#agrega_url", function(e) {
@@ -252,7 +239,6 @@
     });  	
 
 
-
     $(document).on("click", ".btn_borra_url", function(e) {
         e.preventDefault();
         var pk = $(this).attr('data-id');
@@ -293,12 +279,7 @@
     });    
 
 
-
-
-
 </script>
-
-
 
 
 </body>
