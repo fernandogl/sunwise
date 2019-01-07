@@ -28,12 +28,12 @@ $ source venv/bin/activate
 
 Instalar las dependencias de Python dentro del ambiente virtual.
 ```
+$ cd src
 $ pip install -r requirements.txt 
 ```
 
 Ejecutar las migraciones de la base de datos
 ```
-$ cd src
 $ python manage.py migrate
 ```
 
@@ -64,9 +64,9 @@ Dentro de la carpeta **src/json** se encuentran 2 archivos JSON que pueden ser u
 Dentro del archivo JSON se define una lista de objetos, utilizando el nombre **original** y la ruta completa como el valor en cadena de texto.
 ```
 [
-	{ "original": "http://aa.com"},
-	{ "original": "http://bb.com"},
-	{ "original": "http://cc.com"}
+    { "original": "http://aa.com"},
+    { "original": "http://bb.com"},
+    { "original": "http://cc.com"}
 ]
 ```
 
